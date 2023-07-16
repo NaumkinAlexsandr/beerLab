@@ -1,0 +1,92 @@
+.title {
+  font-size: 55px;
+  text-align: center;
+}
+
+.deleteButton {
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 50px;
+  background-color: inherit;
+  background-image: url("../image/delete.png");
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  top: 37%;
+  right: 30px;
+  opacity: 0;
+  z-index: 2;
+
+  &:enabled {
+    opacity: 1;
+  }
+}
+
+.loadingButton {
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 50px;
+  background-color: inherit;
+  background-image: url("../image/upload.png");
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  top: 42%;
+  right: 30px;
+  opacity: 0;
+  z-index: 2;
+
+  &:enabled {
+    opacity: 1;
+  }
+}
+
+#mycustom-scroll {
+  height: 580px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  .card {
+    margin: 5px;
+    width: 350px;
+    height: 570px;
+    border: 1px solid silver;
+    border-radius: 20px;
+    background-color: rgb(235, 233, 233);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .beerImg {
+      padding: 5px;
+      width: 100px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+    h1,
+    h4 {
+      margin: 0;
+    }
+    p {
+      padding: 0 6px;
+    }
+
+    &.selected {
+      border: 1px solid silver;
+      background-color: #c5c5c5;
+    }
+  }
+}
