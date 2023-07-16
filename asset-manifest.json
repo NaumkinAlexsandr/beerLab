@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/beerLab/static/css/main.5f70b43a.css",
+    "main.js": "/beerLab/static/js/main.a7226b41.js",
+    "static/media/logo.jpg": "/beerLab/static/media/logo.83b511cf7b268a196a84.jpg",
+    "index.html": "/beerLab/index.html",
+    "main.5f70b43a.css.map": "/beerLab/static/css/main.5f70b43a.css.map",
+    "main.a7226b41.js.map": "/beerLab/static/js/main.a7226b41.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5f70b43a.css",
+    "static/js/main.a7226b41.js"
+  ]
+}
