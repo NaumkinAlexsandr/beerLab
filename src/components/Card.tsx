@@ -6,8 +6,6 @@ const Card: React.FC = () => {
   const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
   const [visibleCards, setVisibleCards] = useState<any[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [areCardsVisible, setAreCardsVisible] = useState<boolean>(true);
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const handleContextMenu = (
     event: React.MouseEvent<HTMLDivElement>,
@@ -26,7 +24,6 @@ const Card: React.FC = () => {
       prevData.filter((beer) => !selectedCardIds.includes(beer.id))
     );
     setSelectedCardIds([]);
-    setAreCardsVisible(false);
   };
 
   useEffect(() => {
@@ -46,7 +43,7 @@ const Card: React.FC = () => {
         const endIndex = startIndex + 5;
         const nextBatch = beerData.slice(startIndex, endIndex);
         setVisibleCards((prevCards) => [...prevCards, ...nextBatch]);
-      }, 300);
+      }, 500);
     };
 
     const container = scrollContainerRef.current;
@@ -63,27 +60,31 @@ const Card: React.FC = () => {
 
   useEffect(() => {
     setVisibleCards(beerData.slice(0, 15));
-    setAreCardsVisible(beerData.length === 0);
   }, [beerData]);
 
   useEffect(() => {
-    fetchBeerData(1);
+    fetchBeerData();
   }, []);
 
-  const fetchNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-    fetchBeerData(currentPage + 1);
-  };
-
-  const fetchBeerData = async (currentPage: number | undefined) => {
+  const fetchBeerData = async () => {
     try {
-      const response = await fetch(
-        `https://api.punkapi.com/v2/beers?page=${currentPage}`
-      );
-      const json = await response.json();
-      setBeerData(json);
-      console.log(json);
-      console.log(response);
+      let page = 1;
+      const allBeers: React.SetStateAction<any[]> = [];
+
+      while (true) {
+        const response = await fetch(
+          `https://api.punkapi.com/v2/beers?page=${page}`
+        );
+        const data = await response.json();
+        if (data.length === 0) {
+          break;
+        }
+        allBeers.push(...data);
+        page++;
+      }
+
+      setBeerData(allBeers);
+      console.log(allBeers);
     } catch (error) {
       console.error("Error fetching beer data:", error);
     }
@@ -96,11 +97,7 @@ const Card: React.FC = () => {
         onClick={handleDeleteCards}
         disabled={selectedCardIds.length === 0}
       ></button>
-      <button
-        className="loadingButton"
-        onClick={fetchNextPage}
-        disabled={!areCardsVisible}
-      ></button>
+
       <div ref={scrollContainerRef} id="mycustom-scroll">
         {visibleCards.map((beer, index) => (
           <div
